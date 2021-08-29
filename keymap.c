@@ -82,13 +82,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *   |      |   ⌥  | CMD  |      |      |                                           |LAUGH |SMILE | WINK |   →  | SAD  |
   *   `----------------------------------'                                           `----------------------------------'
   *
-  *                                    ,-------------------.       ,-------------------.
-  *                                    | LED MOD | LED RMD |       | LED ON  | LED SLD |
-  *                             ,------|---------|---------|       |---------+---------+-------.
-  *                             | LED  |   LED   | LED GRN |       | LED SAI |   LED   |  LED  |
-  *                             | VAL  |   VAL   |---------|       |---------|   HUE   |  HUE  |
-  *                             | DEC  |   INC   | LED RED |       | LED SAD |   DEC   |  INC  |
-  *                             `--------------------------'       `---------------------------'
+  *                                    ,-------------------.       ,----------------------.
+  *                                    | LED MOD | LED RMD |       | LED ON/OFF | LED SLD |
+  *                             ,------|---------|---------|       |------------+---------+-------.
+  *                             | LED  |   LED   | LED GRN |       | LED SAI    |   LED   |  LED  |
+  *                             | VAL  |   VAL   |---------|       |------------|   HUE   |  HUE  |
+  *                             | DEC  |   INC   | LED RED |       | LED SAD    |   DEC   |  INC  |
+  *                             `--------------------------'       `------------------------------'
   */
   [SYMB] = LAYOUT_ergodox(
     // Left Hand
