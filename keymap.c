@@ -27,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * ,----------------------------------------------------.           ,----------------------------------------------------.
   * |    `   |   1  |   2  |   3  |   4  |   5  | SYMB ` |           |   =    |   6  |   7  |   8  |   9  |   0  |   -    |
   * |--------+------+------+------+------+---------------|           |--------+------+------+------+------+------+--------|
-  * |   TAB  |   Q  |   W  |   E  |   R  |   T  | NORMAL |           | MOUSE  |   Y  |   U  |   I  |   O  |   P  |   \    |
+  * |   TAB  |   Q  |   W  |   E  |   R  |   T  | MOUSE  |           | MOUSE  |   Y  |   U  |   I  |   O  |   P  |   \    |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
   * |   ESC  |   A  |   S  |   D  |SYM F |   G  |--------|           |--------|   H  |   J  |   K  |   L  | MS ; |   '    |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
@@ -47,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [INSERT_MODE] = LAYOUT_ergodox(
     // Left Hand
     KC_GRV , KC_1,    KC_2,    KC_3,  KC_4,          KC_5, LT(SYMB,KC_GRV),
-    KC_TAB , KC_Q,    KC_W,    KC_E,  KC_R,          KC_T, NOR_MOD,
+    KC_TAB , KC_Q,    KC_W,    KC_E,  KC_R,          KC_T, MSE_MOD,
     KC_ESC , KC_A,    KC_S,    KC_D,  LT(SYMB,KC_F), KC_G,
     KC_LSFT, KC_Z,    KC_X,    KC_C,  KC_V,          KC_B, SYM_MOD,
     KC_LCTL, KC_LALT, KC_LGUI, CMD_L, CMD_R,
@@ -71,15 +71,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Symbol mode
   *
   * ,----------------------------------------------------.           ,----------------------------------------------------.
-  * | NORMAL |  F1  |  F2  |  F3  |  F4  |  F5  |        |           |  TROLL |  F6  |  F7  |  F8  |  F9  |  F10 |  F11   |
+  * | MOUSE  |  F1  |  F2  |  F3  |  F4  |  F5  |        |           |  TROLL |  F6  |  F7  |  F8  |  F9  |  F10 |  F11   |
   * |--------+------+------+------+------+---------------|           |--------+------+------+------+------+------+--------|
-  * |        |      |      |      |      |      | NORMAL |           |        | PG U |   [  |   {  | <%=  |COFFEE|  F12   |
+  * |        |      |      |      |      |      |        |           |        | PG U |   [  |   {  | <%=  |COFFEE|  F12   |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
   * |        |      |      |      |      |      |--------|           |--------|   ←  |   ↓  |   ↑  |  →   | BLUE |  +1    |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
   * |        |      |      |      |      |      |        |           |        | PG D |   ]  |   }  |  %>  |   /  | SHIFT  |
   * `--------+------+------+------+------+---------------'           `---------------+------+------+------+------+--------'
-  *   |      |   ⌥  | CMD  |      |      |                                           |LAUGH |SMILE | WINK |   →  | SAD  |
+  *   |      |   ⌥  | CMD  |      |      |                                           |LAUGH |SMILE | WINK | CLAP | SAD  |
   *   `----------------------------------'                                           `----------------------------------'
   *
   *                                    ,-------------------.       ,----------------------.
@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
   [SYMB] = LAYOUT_ergodox(
     // Left Hand
-    NOR_MOD, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,
+    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,
     _______, KC_EXLM, KC_AT,   U_ARROW, KC_RCBR, KC_PIPE, _______,
     _______, ___X___, L_ARROW, D_ARROW, R_ARROW, KC_GRV,
     _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______,
@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [MOUSE] = LAYOUT_ergodox(
     // Left Hand
-    NOR_MOD,___X___,___X___,___X___,___X___,___X___,_______,
+    _______,___X___,___X___,___X___,___X___,___X___,_______,
     ___X___,___X___,___X___,KC_MS_U,___X___,___X___,_______,
     ___X___,___X___,KC_MS_L,KC_MS_D,KC_MS_R,___X___,
     _______,___X___,___X___,___X___,___X___,___X___,_______,
@@ -127,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                         KC_BTN1,KC_BTN2,_______,
 
     // Right Hand
-                              _______,_______,_______,_______,_______,_______,RESET,
+                              _______,_______,_______,_______,_______,_______,QK_BOOT,
                               _______,_______,_______,_______,_______,_______,_______,
                                       KC_MS_L,KC_MS_D,KC_MS_U,KC_MS_R,_______,KC_MPLY,
                               _______,_______,_______,KC_MNXT,KC_MPRV,_______,_______,
@@ -184,15 +184,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_PGDN, KC_ENT, GUI_T(KC_SPC)
 ),
 
-};
-
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
-  switch(id) {
-    case 0:
-      if (record->event.pressed) { SEND_STRING (VERSION_STRING); }
-      break;
-  }
-  return MACRO_NONE;
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
