@@ -8,9 +8,4 @@
 #define DISABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
 #define DISABLE_RGB_MATRIX_RAINDROPS
 
-#define INSERT_MODE 0
-#define SYMB 1
-#define MOUSE 2
-#define NORMAL_MODE 3
-
 #include "../../config.h"

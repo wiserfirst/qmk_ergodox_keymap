@@ -2,330 +2,199 @@
 #include "quantum_keycodes.h"
 #include "action_layer.h"
 #include "version.h"
-#include "vim.h"
-
-#define VERSION_STRING QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION
-#define X_____X KC_TRNS
-#define ___X___ KC_NO
-
-/* GUI === CMD === WIN and ALT === OPT */
-#define L_PANE LGUI(LALT(KC_LEFT))
-#define R_PANE LGUI(LALT(KC_RIGHT))
-#define OPT_L LALT(KC_LEFT)
-#define OPT_R LALT(KC_RIGHT)
-#define CMD_L LCMD(KC_LEFT)
-#define CMD_R LCMD(KC_RIGHT)
-
-#define SW_INPT LCTL(KC_SPACE)
-
-#define TO_NORM TO(NORMAL_MODE)
+#include "user.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  /* Insert mode
+  /* Base/QWERTY Layer
   *
   * ,----------------------------------------------------.           ,----------------------------------------------------.
-  * |    `   |   1  |   2  |   3  |   4  |   5  | SYMB ` |           |   =    |   6  |   7  |   8  |   9  |   0  |   -    |
+  * |    `   |   1  |   2  |   3  |   4  |   5  |        |           |        |   6  |   7  |   8  |   9  |   0  |   -    |
   * |--------+------+------+------+------+---------------|           |--------+------+------+------+------+------+--------|
-  * |   TAB  |   Q  |   W  |   E  |   R  |   T  | MOUSE  |           | MOUSE  |   Y  |   U  |   I  |   O  |   P  |   \    |
+  * |  TAB   |   Q  |   W  |   E  |   R  |   T  | NUMBER |           | MOUSE  |   Y  |   U  |   I  |   O  |   P  |   \    |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
-  * |   ESC  |   A  |   S  |   D  |SYM F |   G  |--------|           |--------|   H  |   J  |   K  |   L  | MS ; |   '    |
+  * |  ESC   |CTL A |OPT S |CMD D |SYM F |MSE G |--------|           |--------|MSE H |SYM J |CMD K |OPT L |CTL ; |   '    |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
-  * |  SHIFT |   Z  |   X  |   C  |   V  |   B  | SYMBOL |           | SYMBOL |   N  |   M  |   ,  |   .  |   /  | SHIFT  |
+  * |  CTRL  |   Z  |   X  |   C  |   V  |   B  | SYMBOL |           | SYMBOL |   N  |   M  |   ,  |   .  |   /  | SHIFT  |
   * `--------+------+------+------+------+---------------'           `---------------+------+------+------+------+--------'
-  *   | LCTL |   ⌥  | CMD  | CMD L| CMD R|                                           | L PN | R PN | OPT L| OPT R| Cmd~ |
+  *   |      |      |      |      |      |                                           |      |      |      |      |      |
   *   `----------------------------------'                                           `----------------------------------'
   *
-  *                                      ,-----------------.       ,-----------------.
-  *                                      |   ←    |   →    |       |   ↓     |  ↑    |
-  *                               ,------|--------|--------|       |---------+-------+-------.
-  *                               |      |        |  HOME  |       | PG UP   |       |       |
-  *                               | BSPC | DELETE |--------|       |---------| ENTER | SPACE |
-  *                               |      |        |  END   |       | PG DOWN |       |       |
-  *                               `------------------------'       `------------------------'
+  *                                         ,--------------.       ,--------------.
+  *                                         |       |      |       |      |       |
+  *                                 ,-------|-------|------|       |------+-------+-------.
+  *                                 |       |       |CMD L |       |OPT L |       |       |
+  *                                 | SHIFT | MOUSE |------|       |------| MOUSE | SHIFT |
+  *                                 | BSPC  | TAB   |CMD R |       |OPT R | ENTER | SPACE |
+  *                                 `----------------------'       `----------------------'
   */
-  [INSERT_MODE] = LAYOUT_ergodox(
+  [BASE] = LAYOUT_ergodox(
     // Left Hand
-    KC_GRV , KC_1,    KC_2,    KC_3,  KC_4,          KC_5, LT(SYMB,KC_GRV),
-    KC_TAB , KC_Q,    KC_W,    KC_E,  KC_R,          KC_T, MSE_MOD,
-    KC_ESC , KC_A,    KC_S,    KC_D,  LT(SYMB,KC_F), KC_G,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,  KC_V,          KC_B, SYM_MOD,
-    KC_LCTL, KC_LALT, KC_LGUI, CMD_L, CMD_R,
+    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,   ___X___,
+    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,   NUM_MOD,
+    KC_ESC,  HOME_A,  HOME_S,  HOME_D,  HOME_F,  HOME_G,
+    ___X___, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   SYM_MOD,
+    ___X___, ___X___, ___X___, ___X___, ___X___,
 
-                                                                   KC_LEFT, KC_RGHT,
-                                                                            KC_HOME,
-                                                          KC_BSPC, KC_DEL , KC_END ,
+                                                                   ___X___,  ___X___,
+                                                                              CMD_L,
+                                                        THUM_BSPC, THUM_TAB,  CMD_R,
 
     // Right Hand
-                              KC_EQUAL, KC_6, KC_7,   KC_8,    KC_9,   KC_0,              KC_MINS,
-                              MSE_MOD , KC_Y, KC_U,   KC_I,    KC_O,   KC_P,              KC_BSLS,
-                                        KC_H, KC_J,   KC_K,    KC_L,   LT(MOUSE,KC_SCLN), KC_QUOT,
-                              SYM_MOD , KC_N, KC_M,   KC_COMM, KC_DOT, KC_SLSH,           KC_RSFT,
-                                              L_PANE, R_PANE,  OPT_L,  OPT_R,             LGUI(KC_TILD),
+                      ___X___,  KC_6,   KC_7,   KC_8,    KC_9,    KC_0,      KC_MINS,
+                      MSE_MOD,  KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,      KC_BSLS,
+                                HOME_H, HOME_J, HOME_K,  HOME_L,  HOME_SCLN, KC_QUOT,
+                      SYM_MOD,  KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH,   KC_RSFT,
+                                       ___X___, ___X___, ___X___, ___X___,   ___X___,
 
-    KC_DOWN, KC_UP,
-    KC_PGUP,
-    KC_PGDN, KC_ENT, KC_SPC
+    ___X___, ___X___,
+     OPT_L,
+     OPT_R,  THUM_ENT, THUM_SPC
   ),
 
-  /* Symbol mode
+  /* Symbol/Fn Layer
   *
   * ,----------------------------------------------------.           ,----------------------------------------------------.
-  * | MOUSE  |  F1  |  F2  |  F3  |  F4  |  F5  |        |           |  TROLL |  F6  |  F7  |  F8  |  F9  |  F10 |  F11   |
+  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |        |           |        |  F6  |  F7  |  F8  |  F9  |  F10 |  F11   |
   * |--------+------+------+------+------+---------------|           |--------+------+------+------+------+------+--------|
-  * |        |      |      |      |      |      |        |           |        | PG U |   [  |   {  | <%=  |COFFEE|  F12   |
+  * |        |  \   |  @   |  +   |  -   |  %   |        |           |        |  [   |  (   |  {   | <%=  |      |  F12   |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
-  * |        |      |      |      |      |      |--------|           |--------|   ←  |   ↓  |   ↑  |  →   | BLUE |  +1    |
+  * |        |  ^   |  $   |  *   |  =   |  #   |--------|           |--------|  ←   |  ↓   |  ↑   |  →   |  `   | CMD ~  |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
-  * |        |      |      |      |      |      |        |           |        | PG D |   ]  |   }  |  %>  |   /  | SHIFT  |
+  * |        |      |  &   |  !   |  _   |  |   |        |           |        |  ]   |  )   |  }   |  %>  |  ~   |        |
   * `--------+------+------+------+------+---------------'           `---------------+------+------+------+------+--------'
-  *   |      |   ⌥  | CMD  |      |      |                                           |LAUGH |SMILE | WINK | CLAP | SAD  |
+  *   |      |      |      |      |      |                                           |      |      |      |      |      |
   *   `----------------------------------'                                           `----------------------------------'
   *
-  *                                    ,-------------------.       ,----------------------.
-  *                                    | LED MOD | LED RMD |       | LED ON/OFF | LED SLD |
-  *                             ,------|---------|---------|       |------------+---------+-------.
-  *                             | LED  |   LED   | LED GRN |       | LED SAI    |   LED   |  LED  |
-  *                             | VAL  |   VAL   |---------|       |------------|   HUE   |  HUE  |
-  *                             | DEC  |   INC   | LED RED |       | LED SAD    |   DEC   |  INC  |
-  *                             `--------------------------'       `------------------------------'
+  *                                         ,--------------.       ,--------------.
+  *                                         |       |      |       |      |       |
+  *                                 ,-------|-------|------|       |------+-------+-------.
+  *                                 |       |       |      |       |      |       |       |
+  *                                 | CMD L | CMD R |------|       |------| OPT L | OPT R |
+  *                                 |       |       |      |       |      |       |       |
+  *                                 `----------------------'       `----------------------'
   */
   [SYMB] = LAYOUT_ergodox(
     // Left Hand
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,
-    _______, KC_EXLM, KC_AT,   U_ARROW, KC_RCBR, KC_PIPE, _______,
-    _______, ___X___, L_ARROW, D_ARROW, R_ARROW, KC_GRV,
-    _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______,
-    _______, _______, _______, KC_LBRC, KC_LCBR,
+    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   ___X___,
+    _______, KC_BSLS, KC_AT,   KC_PLUS, KC_MINS, KC_PERC, _______,
+    _______, KC_CIRC, KC_DLR,  KC_ASTR, KC_EQL,  KC_HASH,
+    _______, _______, KC_AMPR, KC_EXLM, KC_UNDS, KC_PIPE, _______,
+    ___X___, ___X___, ___X___, ___X___, ___X___,
 
-                                                                 RGB_MOD, RGB_RMOD,
-                                                                          LED_GRN,
-                                                        RGB_VAD, RGB_VAI, LED_RED,
+                                                                 ___X___, ___X___,
+                                                                          _______,
+                                                          CMD_L,  CMD_R,  _______,
 
     // Right Hand
-                              TROLL,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-                              _______, KC_PGUP, KC_LBRC, KC_LCBR, L_ERB,   COFFEE,  KC_F12,
-                                       KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, LED_BLU, PLUS_ONE,
-                              _______, KC_PGDN, KC_RBRC, KC_RCBR, R_ERB,   KC_BSLS, _______,
-                                                LAUGH,   SMILE,   WINK,    CLAP,    SAD,
+                              ___X___, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+                              _______, KC_LBRC, KC_LPRN, KC_LCBR, L_ERB,   _______, KC_F12,
+                                       KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_GRV,  CMD_TILD,
+                              _______, KC_RBRC, KC_RPRN, KC_RCBR, R_ERB,   KC_TILD, _______,
+                                                ___X___, ___X___, ___X___, ___X___, ___X___,
 
-    RGB_TOG, RGB_SLD,
-    RGB_SAI,
-    RGB_SAD, RGB_HUD, RGB_HUI
+    ___X___, ___X___,
+    _______,
+    _______,  OPT_L,  OPT_R
   ),
 
+  /* Number/Emoji Layer
+  *
+  * ,-----------------------------------------------------.           ,----------------------------------------------------.
+  * |        |      |      |      |      |       |        |           |        |      |      |      |      |      |        |
+  * |--------+------+------+------+------+----------------|           |--------+------+------+------+------+------+--------|
+  * |        |  4   |  3   |  2   |  1   |   0   |        |           |        |  5   |  6   |  7   |  8   |  9   |        |
+  * |--------+------+------+------+------+-------|        |           |        |------+------+------+------+------+--------|
+  * |        | EYES |C_MARK| 100  | PRAY | BOW   |--------|           |--------| WAVE | CLAP | HEART| TADA | SMILE|   +1   |
+  * |--------+------+------+------+------+-------|        |           |        |------+------+------+------+------+--------|
+  * |        |      | CAKE | OKAY | THINK|CRS FGR|        |           |        | TEA  |COFFEE|F_PALM|EXP_HD|SPRISD|        |
+  * `--------+------+------+------+------+----------------'           `---------------+------+------+------+------+--------'
+  *   |      |      |      |      |      |                                            |      |      |      |      |      |
+  *   `----------------------------------'                                            `----------------------------------'
+  *
+  *                                          ,--------------.       ,--------------.
+  *                                          |       |      |       |      |       |
+  *                                  ,-------|-------|------|       |------+-------+-------.
+  *                                  |       |       |      |       |      |       |       |
+  *                                  | LEFT  | RIGHT |------|       |------| LEFT  | RIGHT |
+  *                                  | PANE  | PANE  |      |       |      | PANE  | PANE  |
+  *                                  `----------------------'       `----------------------'
+  */
+  [NUMBER] = LAYOUT_ergodox(
+    // Left Hand
+    _______, _______, _______,  _______, _______,  _______, ___X___,
+    _______, KC_4,    KC_3,     KC_2,    KC_1,     KC_0,    _______,
+    _______, TM_EYES, TM_CMARK, TM_100,  TM_PRAY,  TM_BOW,
+    _______, _______, TM_CAKE,  TM_OKAY, TM_THINK, TM_CSFG, _______,
+    ___X___, ___X___, ___X___,  ___X___, ___X___,
+
+                                                                       _______,_______,
+                                                                               _______,
+                                                               L_PANE, R_PANE, _______,
+
+    // Right Hand
+                              ___X___, _______, _______, _______, _______, _______, _______,
+                              _______, KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    _______,
+                                       TM_WAVE, TM_CLAP, TM_HEART,TM_TADA, TM_SMILE,TM_P_ONE,
+                              _______, TM_TEA,  TM_COFE, TM_PALM, TM_EXPH, TM_SURP, _______,
+                                                ___X___, ___X___, ___X___, ___X___, ___X___,
+
+    _______, _______,
+    _______,
+    _______, L_PANE,  R_PANE
+  ),
+
+  /* Mouse/RGB control Layer
+  *
+  * ,-----------------------------------------------------.           ,----------------------------------------------------.
+  * |        |      |      |      |      |       |        |           |        |      |      |      |      |      |BOOTLODR|
+  * |--------+------+------+------+------+----------------|           |--------+------+------+------+------+------+--------|
+  * |        |SA INC|SA DEC|NXT MD|PRV MD|PLN MD |        |           |        |      |      |      |      |      |        |
+  * |--------+------+------+------+------+-------|        |           |        |------+------+------+------+------+--------|
+  * |        |VO INC|VO DEC| RED  | BLUE |LED TOG|--------|           |--------| MSE L| MSE D| MSE U| MSE R|      |        |
+  * |--------+------+------+------+------+-------|        |           |        |------+------+------+------+------+--------|
+  * |        |HU INC|HU DEC| GREEN|ORANGE|       |        |           |        |      | L BTN| R BTN|      |      |        |
+  * `--------+------+------+------+------+----------------'           `---------------+------+------+------+------+--------'
+  *   |      |      |      |      |      |                                            |      |      |      |      |      |
+  *   `----------------------------------'                                            `----------------------------------'
+  *
+  *                                          ,--------------.       ,--------------.
+  *                                          |       |      |       |      |       |
+  *                                  ,-------|-------|------|       |------+-------+-------.
+  *                                  |       |       |      |       |      |       |       |
+  *                                  |       |       |------|       |------|       |       |
+  *                                  |       |       |      |       |      |       |       |
+  *                                  `----------------------'       `----------------------'
+  */
   [MOUSE] = LAYOUT_ergodox(
     // Left Hand
-    _______,___X___,___X___,___X___,___X___,___X___,_______,
-    ___X___,___X___,___X___,KC_MS_U,___X___,___X___,_______,
-    ___X___,___X___,KC_MS_L,KC_MS_D,KC_MS_R,___X___,
-    _______,___X___,___X___,___X___,___X___,___X___,_______,
-    _______,_______,_______,KC_BTN1,KC_BTN2,
+    _______, ___X___, ___X___, ___X___, ___X___,  ___X___, _______,
+    _______, RGB_SAI, RGB_SAD, RGB_MOD, RGB_RMOD, RGB_M_P, _______,
+    _______, RGB_VAI, RGB_VAD, LED_RED, LED_BLU,  RGB_TOG,
+    _______, RGB_HUI, RGB_HUD, LED_GRN, LED_ORNG, _______, _______,
+    ___X___, ___X___, ___X___, ___X___, ___X___,
 
-                                                                SW_INPT,_______,
-                                                                        _______,
-                                                        KC_BTN1,KC_BTN2,_______,
+                                                                       _______,_______,
+                                                                               _______,
+                                                               _______,_______,_______,
 
     // Right Hand
                               _______,_______,_______,_______,_______,_______,QK_BOOT,
                               _______,_______,_______,_______,_______,_______,_______,
-                                      KC_MS_L,KC_MS_D,KC_MS_U,KC_MS_R,_______,KC_MPLY,
-                              _______,_______,_______,KC_MNXT,KC_MPRV,_______,_______,
-                                              KC_MUTE,KC_VOLD,KC_VOLU,_______,_______,
+                                      KC_MS_L,KC_MS_D,KC_MS_U,KC_MS_R,_______,_______,
+                              _______,_______,KC_BTN1,KC_BTN2,_______,_______,_______,
+                                              _______,_______,_______,_______,_______,
 
     _______,_______,
     _______,
-    _______,KC_WBAK,KC_WFWD
-  ),
-
-  /* Normal mode
-  *
-  * ,----------------------------------------------------.           ,-----------------------------------------------------.
-  * |        |      |      |      |      |      |        |           |        |      |      |      |      |       |        |
-  * |--------+------+------+------+------+---------------|           |--------+------+------+------+------+-------+--------|
-  * |  TAB   |      | WORD |  END |      |      | INSERT |           | SYMBOL | YANK | UNDO |INSERT| OPEN |  PUT  |        |
-  * |--------+------+------+------+------+------|        |           |        |------+------+------+------+-------+--------|
-  * |    ⎋   |APPEND|      |  DEL |      |      |--------|           |--------|  ←   |  ↓   |  ↑   |  →   | MOUSE |    ⎋   |
-  * |--------+------+------+------+------+------|        |           |        |------+------+------+------+-------+--------|
-  * | SHIFT  |      |      |      |VISUAL| BACK | MOUSE  |           |        |      |      |      |      |       | SHIFT  |
-  * `--------+------+------+------+------+---------------'           `---------------+------+------+------+-------+--------'
-  *   | CTL  |OPTION| CMD  |      |      |                                           |      |      |      |       | PAIR |
-  *   `----------------------------------'                                           `-----------------------------------'
-  *                                      ,-----------------.       ,-----------------.
-  *                                      | OPTION |  CMD   |       |  COMMAND |OPTION|
-  *                               ,------|--------|--------|       |----------+------+-------.
-  *                               | BSPC |        |  HOME  |       |  PG UP   |      | SPACE |
-  *                               |      | DELETE |--------|       |----------|ENTER |       |
-  *                               |   ⌘  |        |  END   |       |  PG DOWN |      |   ⌘   |
-  *                               `------------------------'       `-------------------------'
-  */
-  [NORMAL_MODE] = LAYOUT_ergodox(
-    // Layer 2 Left Hand
-    X_____X,X_____X,X_____X,X_____X,X_____X,X_____X,X_____X,
-    KC_TAB ,X_____X,VIM_W,  VIM_E  ,X_____X,X_____X,X_____X,
-    X_____X,VIM_A  ,VIM_S  ,VIM_D  ,X_____X,X_____X,
-    KC_LSFT,X_____X,VIM_X  ,VIM_C  ,VIM_V  ,VIM_B  ,_______,
-    KC_LCTL,KC_LALT,KC_LGUI,X_____X,X_____X,
-
-                                                             KC_LALT,KC_LGUI,
-                                                                     KC_HOME,
-                                            GUI_T(KC_BSPC),  KC_DEL ,KC_END ,
-
-
-    // Layer 2 Right Hand
-                              _______,X_____X,X_____X,X_____X,X_____X,X_____X,X_____X,
-                              _______,VIM_Y  ,VIM_U  ,VIM_I  ,VIM_O  ,VIM_P  ,X_____X,
-                                      VIM_H  ,VIM_J  ,VIM_K  ,VIM_L  ,MSE_MOD,X_____X,
-                              _______,X_____X,X_____X,X_____X,X_____X,X_____X,KC_RSFT,
-                                              X_____X,X_____X,X_____X,KC_RALT,KC_RCTL,
-
-    KC_RGUI, KC_RALT,
-    KC_PGUP,
-    KC_PGDN, KC_ENT, GUI_T(KC_SPC)
-),
-
+    _______,_______,_______
+  )
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  bool SHIFTED = (keyboard_report->mods & MOD_BIT(KC_LSFT)) |
-                 (keyboard_report->mods & MOD_BIT(KC_RSFT));
-
   if (record->event.pressed) {
     switch (keycode) {
-      case VIM_A:
-        SHIFTED ? VIM_APPEND_LINE() : VIM_APPEND();
-        return false;
-
-      case VIM_B:
-        switch(VIM_QUEUE) {
-          case KC_NO: VIM_BACK(); break;
-          case VIM_C: VIM_CHANGE_BACK(); break;
-          case VIM_D: VIM_DELETE_BACK(); break;
-          case VIM_V: VIM_VISUAL_BACK(); break;
-        }
-        return false;
-
-      case VIM_C:
-        switch(VIM_QUEUE) {
-          case KC_NO: SHIFTED ? VIM_CHANGE_LINE() : VIM_LEADER(VIM_C); break;
-          case VIM_C: VIM_CHANGE_WHOLE_LINE(); break;
-        }
-        return false;
-
-      case VIM_D:
-        switch(VIM_QUEUE) {
-          case KC_NO: SHIFTED ? VIM_DELETE_LINE() : VIM_LEADER(VIM_D); break;
-          case VIM_D: VIM_DELETE_WHOLE_LINE(); break;
-        }
-        return false;
-
-      case VIM_E:
-        switch (VIM_QUEUE) {
-          case KC_NO: VIM_END(); break;
-          case VIM_C: VIM_CHANGE_END(); break;
-          case VIM_D: VIM_DELETE_END(); break;
-          case VIM_V: VIM_VISUAL_END(); break;
-        }
-        return false;
-
-      case VIM_H:
-        switch (VIM_QUEUE) {
-          case KC_NO: VIM_LEFT(); break;
-          case VIM_C: VIM_CHANGE_LEFT(); break;
-          case VIM_D: VIM_DELETE_LEFT(); break;
-          case VIM_V: VIM_VISUAL_LEFT(); break;
-        }
-        return false;
-
-      case VIM_I:
-        switch (VIM_QUEUE) {
-          case KC_NO: layer_move(INSERT_MODE); break;
-          case VIM_C: VIM_LEADER(VIM_CI); break;
-          case VIM_D: VIM_LEADER(VIM_DI); break;
-          case VIM_V: VIM_LEADER(VIM_VI); break;
-        }
-        return false;
-
-      case VIM_J:
-        switch (VIM_QUEUE) {
-          case KC_NO: SHIFTED ? VIM_JOIN() : VIM_DOWN(); break;
-          case VIM_C: VIM_CHANGE_DOWN(); break;
-          case VIM_D: VIM_DELETE_DOWN(); break;
-          case VIM_V: VIM_VISUAL_DOWN(); break;
-        }
-        return false;
-
-      case VIM_K:
-        switch (VIM_QUEUE) {
-          case KC_NO: VIM_UP(); break;
-          case VIM_C: VIM_CHANGE_UP(); break;
-          case VIM_D: VIM_DELETE_UP(); break;
-          case VIM_V: VIM_VISUAL_UP(); break;
-        }
-        return false;
-
-      case VIM_L:
-        switch (VIM_QUEUE) {
-          case KC_NO: VIM_RIGHT(); break;
-          case VIM_C: VIM_CHANGE_RIGHT(); break;
-          case VIM_D: VIM_DELETE_RIGHT(); break;
-          case VIM_V: VIM_VISUAL_RIGHT(); break;
-        }
-        return false;
-
-      case VIM_O:
-        SHIFTED ? VIM_OPEN_ABOVE() : VIM_OPEN();
-        return false;
-
-      case VIM_P:
-        SHIFTED ? VIM_PUT_BEFORE() : VIM_PUT();
-        return false;
-
-      case VIM_S:
-        SHIFTED ? VIM_CHANGE_WHOLE_LINE() : VIM_SUBSTITUTE();
-        return false;
-
-      case VIM_U:
-        VIM_UNDO();
-        return false;
-
-      case VIM_V:
-        VIM_LEADER(VIM_V);
-        return false;
-
-      case VIM_W:
-        switch (VIM_QUEUE) {
-          case KC_NO: VIM_WORD(); break;
-          case VIM_C: VIM_CHANGE_WORD(); break;
-          case VIM_CI: VIM_CHANGE_INNER_WORD(); break;
-          case VIM_D: VIM_DELETE_WORD(); break;
-          case VIM_DI: VIM_DELETE_INNER_WORD(); break;
-          case VIM_V: VIM_VISUAL_WORD(); break;
-          case VIM_VI: VIM_VISUAL_INNER_WORD(); break;
-        }
-        return false;
-
-      case VIM_X:
-        VIM_CUT();
-        return false;
-
-      case VIM_Y:
-        SHIFTED ? VIM_YANK_LINE() : VIM_YANK();
-        return false;
-
-        // dynamically generate these.
-      case EPRM:
-        eeconfig_init();
-        return false;
-
-      case VRSN:
-        SEND_STRING(VERSION_STRING);
-        return false;
-
-      case RGB_SLD:
-        rgblight_mode(1);
-        return false;
-
+      // dynamically generate these.
       case LED_BLU:
         rgblight_mode(1);
         rgblight_sethsv(172,255,255);
@@ -339,6 +208,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case LED_RED:
         rgblight_mode(1);
         rgblight_sethsv(0,255,255);
+        return false;
+
+      case LED_ORNG:
+        rgblight_mode(1);
+        rgblight_sethsv(27,255,255);
+        return false;
+
+      case L_ERB:
+        SEND_STRING("<%=");
+        return false;
+
+      case R_ERB:
+        SEND_STRING("%>");
         return false;
 
       case CLAP:
@@ -361,10 +243,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING(":arrow_left:");
         return false;
 
-      case L_ERB:
-        SEND_STRING("<%=");
-        return false;
-
       case MINUS_ONE:
         SEND_STRING(":-1:");
         return false;
@@ -373,20 +251,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING(":neutral:");
         return false;
 
-      case NOT_EQUALS:
-        SEND_STRING("!=");
-        return false;
-
       case PLUS_ONE:
         SEND_STRING(":+1:");
         return false;
 
       case R_ARROW:
         SEND_STRING(":arrow_right:");
-        return false;
-
-      case R_ERB:
-        SEND_STRING("%>");
         return false;
 
       case SAD:
@@ -408,6 +278,87 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case WINK:
         SEND_STRING(":wink:");
         return false;
+
+      // MS Teams Emojis
+      case TM_100:
+        SEND_STRING("(hundredpoints)");
+        return false;
+
+      case TM_BOW:
+        SEND_STRING("(manbowing)");
+        return false;
+
+      case TM_CAKE:
+        SEND_STRING("(cake)");
+        return false;
+
+      case TM_CLAP:
+        SEND_STRING("(clap)");
+        return false;
+
+      case TM_CMARK:
+        SEND_STRING("(checkmarkbutton)");
+        return false;
+
+      case TM_COFE:
+        SEND_STRING("(coffee)");
+        return false;
+
+      case TM_CSFG:
+        SEND_STRING("(crossedfingers)");
+        return false;
+
+      case TM_EXPH:
+        SEND_STRING("(explodinghead)");
+        return false;
+
+      case TM_EYES:
+        SEND_STRING("(eyes)");
+        return false;
+
+      case TM_HEART:
+        SEND_STRING("(heart)");
+        return false;
+
+      case TM_PALM:
+        SEND_STRING("(facepalm)");
+        return false;
+
+      case TM_OKAY:
+        SEND_STRING("(ok)");
+        return false;
+
+      case TM_PRAY:
+        SEND_STRING("(pray)");
+        return false;
+
+      case TM_P_ONE:
+        SEND_STRING("(y)");
+        return false;
+
+      case TM_SMILE:
+        SEND_STRING(":)");
+        return false;
+
+      case TM_SURP:
+        SEND_STRING(":O");
+        return false;
+
+      case TM_TADA:
+        SEND_STRING("(partypopper)");
+        return false;
+
+      case TM_TEA:
+        SEND_STRING("(chai)");
+        return false;
+
+      case TM_THINK:
+        SEND_STRING("(thinkingface)");
+        return false;
+
+      case TM_WAVE:
+        SEND_STRING("(wavinghand)");
+        return false;
     }
   }
 
@@ -416,7 +367,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void matrix_init_user(void) {
   debug_enable = true;
-  VIM_LEADER(KC_NO);
 };
 
 void matrix_scan_user(void) {
