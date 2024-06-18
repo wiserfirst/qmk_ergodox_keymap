@@ -13,9 +13,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * |--------+------+------+------+------+---------------|           |--------+------+------+------+------+------+--------|
   * |  TAB   |   Q  |   W  |   E  |   R  |   T  | NUMBER |           | MOUSE  |   Y  |   U  |   I  |   O  |   P  |   \    |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
-  * |  ESC   |CTL A |OPT S |CMD D |SYM F |MSE G |--------|           |--------|MSE H |SYM J |CMD K |OPT L |CTL ; |   '    |
+  * |  ESC   |CTL A |OPT S |CMD D |SYM F |NUM G |--------|           |--------|NUM H |SYM J |CMD K |OPT/L |CTL ; |   '    |
   * |--------+------+------+------+------+------|        |           |        |------+------+------+------+------+--------|
-  * |  CTRL  |   Z  |   X  |   C  |   V  |   B  | SYMBOL |           | SYMBOL |   N  |   M  |   ,  |   .  |   /  | SHIFT  |
+  * |        |   Z  |   X  |   C  |MSE V |   B  | SYMBOL |           | SYMBOL |   N  |MSE M |   ,  |   .  |   /  | SHIFT  |
   * `--------+------+------+------+------+---------------'           `---------------+------+------+------+------+--------'
   *   |      |      |      |      |      |                                           |      |      |      |      |      |
   *   `----------------------------------'                                           `----------------------------------'
@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                                         |       |      |       |      |       |
   *                                 ,-------|-------|------|       |------+-------+-------.
   *                                 |       |       |CMD L |       |OPT L |       |       |
-  *                                 | SHIFT | MOUSE |------|       |------| MOUSE | SHIFT |
+  *                                 | SHIFT | HYPER |------|       |------| MEH   | SHIFT |
   *                                 | BSPC  | TAB   |CMD R |       |OPT R | ENTER | SPACE |
   *                                 `----------------------'       `----------------------'
   */
@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,   ___X___,
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,   NUM_MOD,
     KC_ESC,  HOME_A,  HOME_S,  HOME_D,  HOME_F,  HOME_G,
-    ___X___, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   SYM_MOD,
+    ___X___, KC_Z,    KC_X,    KC_C,    HOME_V,  KC_B,   SYM_MOD,
     ___X___, ___X___, ___X___, ___X___, ___X___,
 
                                                                    ___X___,  ___X___,
@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                       ___X___,  KC_6,   KC_7,   KC_8,    KC_9,    KC_0,      KC_MINS,
                       MSE_MOD,  KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,      KC_BSLS,
                                 HOME_H, HOME_J, HOME_K,  HOME_L,  HOME_SCLN, KC_QUOT,
-                      SYM_MOD,  KC_N,   KC_M,   KC_COMM, KC_DOT,  KC_SLSH,   KC_RSFT,
+                      SYM_MOD,  KC_N,   HOME_M, KC_COMM, KC_DOT,  KC_SLSH,   KC_RSFT,
                                        ___X___, ___X___, ___X___, ___X___,   ___X___,
 
     ___X___, ___X___,
@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                                         |       |      |       |      |       |
   *                                 ,-------|-------|------|       |------+-------+-------.
   *                                 |       |       |      |       |      |       |       |
-  *                                 | CMD L | CMD R |------|       |------| OPT L | OPT R |
+  *                                 | CMD L | CMD R |------|       |------| CMD L | CMD R |
   *                                 |       |       |      |       |      |       |       |
   *                                 `----------------------'       `----------------------'
   */
@@ -95,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     ___X___, ___X___,
     _______,
-    _______,  OPT_L,  OPT_R
+    _______,  CMD_L,  CMD_R
   ),
 
   /* Number/Emoji Layer
@@ -116,8 +116,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                                          |       |      |       |      |       |
   *                                  ,-------|-------|------|       |------+-------+-------.
   *                                  |       |       |      |       |      |       |       |
-  *                                  | LEFT  | RIGHT |------|       |------| LEFT  | RIGHT |
-  *                                  | PANE  | PANE  |      |       |      | PANE  | PANE  |
+  *                                  | OPT L | OPT R |------|       |------| OPT L | OPT R |
+  *                                  |       |       |      |       |      |       |       |
   *                                  `----------------------'       `----------------------'
   */
   [NUMBER] = LAYOUT_ergodox(
@@ -130,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                                                                        _______,_______,
                                                                                _______,
-                                                               L_PANE, R_PANE, _______,
+                                                                OPT_L,  OPT_R, _______,
 
     // Right Hand
                               ___X___, _______, _______, _______, _______, _______, _______,
@@ -141,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     _______, _______,
     _______,
-    _______, L_PANE,  R_PANE
+    _______,  OPT_L,  OPT_R
   ),
 
   /* Mouse/RGB control Layer
@@ -162,8 +162,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *                                          |       |      |       |      |       |
   *                                  ,-------|-------|------|       |------+-------+-------.
   *                                  |       |       |      |       |      |       |       |
-  *                                  |       |       |------|       |------|       |       |
-  *                                  |       |       |      |       |      |       |       |
+  *                                  | LEFT  | RIGHT |------|       |------| LEFT  | RIGHT |
+  *                                  | PANE  | PANE  |      |       |      | PANE  | PANE  |
   *                                  `----------------------'       `----------------------'
   */
   [MOUSE] = LAYOUT_ergodox(
@@ -176,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
                                                                        _______,_______,
                                                                                _______,
-                                                               _______,_______,_______,
+                                                               L_PANE, R_PANE, _______,
 
     // Right Hand
                               _______,_______,_______,_______,_______,_______,QK_BOOT,
@@ -187,7 +187,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     _______,_______,
     _______,
-    _______,_______,_______
+    _______,L_PANE, R_PANE
   )
 };
 

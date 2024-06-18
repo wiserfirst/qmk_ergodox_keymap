@@ -41,13 +41,15 @@
 #define HOME_G LT(NUMBER, KC_G)
 #define HOME_H LT(NUMBER, KC_H)
 
+// Lower Home Row Layer Taps
+#define HOME_V LT(MOUSE, KC_V)
+#define HOME_M LT(MOUSE, KC_M)
+
 // Thumb Mod-Taps
 #define THUM_BSPC LSFT_T(KC_BSPC)
 #define THUM_SPC  RSFT_T(KC_SPC)
-
-// Thumb Layer Taps
-#define THUM_TAB LT(MOUSE, KC_TAB)
-#define THUM_ENT LT(MOUSE, KC_ENT)
+#define THUM_TAB HYPR_T(KC_TAB)
+#define THUM_ENT MEH_T(KC_ENT)
 
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
