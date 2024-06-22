@@ -127,9 +127,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // Right Hand
                               ___X___, _______, _______, _______, _______, _______, _______,
-                              _______, TM_CLAP, KC_7,    KC_8,    KC_9,    TM_COFE, _______,
-                                       TM_WAVE, KC_4,    KC_5,    KC_6,   TM_SMILE, TM_P_ONE,
-                              _______, KC_0,    KC_1,    KC_2,    KC_3,    TM_TEA,  _______,
+                              _______, TM_CLAP, KC_P7,   KC_P8,   KC_P9,   TM_COFE, _______,
+                                       TM_WAVE, KC_P4,   KC_P5,   KC_P6,   TM_SMILE,TM_P_ONE,
+                              _______, KC_P0,   KC_P1,   KC_P2,   KC_P3,   TM_TEA,  _______,
                                                 ___X___, ___X___, ___X___, ___X___, ___X___,
 
     _______, _______,
