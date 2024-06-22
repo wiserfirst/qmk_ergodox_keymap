@@ -28,25 +28,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_ergodox(
     // Left Hand
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,   ___X___,
-    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,   NUM_MOD,
+    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,   NUM_LYR,
     KC_ESC,  HOME_A,  HOME_S,  HOME_D,  HOME_F,  HOME_G,
-    ___X___, KC_Z,    KC_X,    KC_C,    HOME_V,  KC_B,   SYM_MOD,
+    ___X___, KC_Z,    KC_X,    KC_C,    HOME_V,  KC_B,   SYM_LYR,
     ___X___, ___X___, ___X___, ___X___, ___X___,
 
                                                                    ___X___,  ___X___,
-                                                                              CMD_L,
-                                                        THUM_BSPC, THUM_TAB,  CMD_R,
+                                                                             _______,
+                                                        THUM_BSPC, THUM_TAB, _______,
 
     // Right Hand
                       ___X___,  KC_6,   KC_7,   KC_8,    KC_9,    KC_0,      KC_MINS,
-                      MSE_MOD,  KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,      KC_BSLS,
+                      MSE_LYR,  KC_Y,   KC_U,   KC_I,    KC_O,    KC_P,      KC_BSLS,
                                 HOME_H, HOME_J, HOME_K,  HOME_L,  HOME_SCLN, KC_QUOT,
-                      SYM_MOD,  KC_N,   HOME_M, KC_COMM, KC_DOT,  KC_SLSH,   KC_RSFT,
+                      SYM_LYR,  KC_N,   HOME_M, KC_COMM, KC_DOT,  KC_SLSH,   KC_RSFT,
                                        ___X___, ___X___, ___X___, ___X___,   ___X___,
 
     ___X___, ___X___,
-     OPT_L,
-     OPT_R,  THUM_ENT, THUM_SPC
+    _______,
+    _______, THUM_ENT, THUM_SPC
   ),
 
 /* .---------------------------------------------------.         .---------------------------------------------------.
@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // Right Hand
                               ___X___, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-                              _______, KC_LBRC, KC_LPRN, KC_LCBR, L_ERB,   _______, KC_F12,
+                              _______, KC_LBRC, KC_LPRN, KC_LCBR, L_ERB,   ___X___, KC_F12,
                                        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_GRV,  CMD_TILD,
                               _______, KC_RBRC, KC_RPRN, KC_RCBR, R_ERB,   KC_TILD, _______,
                                                 ___X___, ___X___, ___X___, ___X___, ___X___,

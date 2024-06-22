@@ -8,10 +8,10 @@
 #define NUMBER 2
 #define MOUSE 3
 
-#define BAS_MOD TO(BASE)
-#define SYM_MOD TG(SYMB)
-#define NUM_MOD TG(NUMBER)
-#define MSE_MOD TG(MOUSE)
+#define BAS_LYR TO(BASE)
+#define SYM_LYR TG(SYMB)
+#define NUM_LYR TG(NUMBER)
+#define MSE_LYR TG(MOUSE)
 
 #define X_____X KC_TRNS
 #define ___X___ KC_NO
