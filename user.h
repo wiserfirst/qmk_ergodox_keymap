@@ -57,6 +57,7 @@ enum custom_keycodes {
   LED_GRN, // HSV_86_255_128
   LED_RED, // HSV_0_255_255
   LED_ORNG, // HSV_27_255_255
+  LED_PUPL,
   L_ERB,
   R_ERB,
   // Emojis

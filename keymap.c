@@ -142,9 +142,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+--------------|         |-------+------+------+------+------+------+--------|
  * |        |🌈SA↑ |🌈SA↓ |🌈MD→ |🌈MD← | 🌈MP |       |         |       |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|       |         |       |------+------+------+------+------+--------|
- * |        | 💡↑  | 💡↓  |  🟥  |  🟦  |  💡  |-------|         |-------| 🐭 ← | 🐭 ↓ | 🐭 ↑ | 🐭 → |      |        |
+ * |        | 💡↑  | 💡↓  |  🟥  |  🟩  |  💡  |-------|         |-------| 🐭 ← | 🐭 ↓ | 🐭 ↑ | 🐭 → |      |        |
  * |--------+------+------+------+------+------|       |         |       |------+------+------+------+------+--------|
- * |        |🌈HU↑ |🌈HU↓ |  🟩  |  🟧  |      |       |         |       |      | 👈🖱️ | 👉🖱️ |      |      |        |
+ * |        |🌈HU↑ |🌈HU↓ |  🟦  |  🟧  |  🟪  |       |         |       |      | 👈🖱️ | 👉🖱️ |      |      |        |
  * '--------+------+------+------+------+--------------'         '--------------+------+------+------+------+--------'
  *  |       |      |      |      |      |                                       |      |      |      |      |       |
  *  '-----------------------------------'                                       '-----------------------------------'
@@ -161,8 +161,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // Left Hand
     _______, ___X___, ___X___, ___X___, ___X___,  ___X___, _______,
     _______, RGB_SAI, RGB_SAD, RGB_MOD, RGB_RMOD, RGB_M_P, _______,
-    _______, RGB_VAI, RGB_VAD, LED_RED, LED_BLU,  RGB_TOG,
-    _______, RGB_HUI, RGB_HUD, LED_GRN, LED_ORNG, _______, _______,
+    _______, RGB_VAI, RGB_VAD, LED_RED, LED_GRN,  RGB_TOG,
+    _______, RGB_HUI, RGB_HUD, LED_BLU, LED_ORNG, LED_PUPL,_______,
     ___X___, ___X___, ___X___, ___X___, ___X___,
 
                                                                        _______,_______,
@@ -187,23 +187,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
       // dynamically generate these.
       case LED_BLU:
-        rgblight_mode(1);
-        rgblight_sethsv(172,255,255);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+        rgb_matrix_sethsv_noeeprom(HSV_BLUE);
         return false;
 
       case LED_GRN:
-        rgblight_mode(1);
-        rgblight_sethsv(86,255,128);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+        rgb_matrix_sethsv_noeeprom(HSV_GREEN);
         return false;
 
       case LED_RED:
-        rgblight_mode(1);
-        rgblight_sethsv(0,255,255);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+        rgb_matrix_sethsv_noeeprom(HSV_RED);
         return false;
 
       case LED_ORNG:
-        rgblight_mode(1);
-        rgblight_sethsv(27,255,255);
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+        rgb_matrix_sethsv_noeeprom(HSV_ORANGE);
+        return false;
+
+      case LED_PUPL:
+        rgb_matrix_mode_noeeprom(1);
+        rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
         return false;
 
       case L_ERB:
