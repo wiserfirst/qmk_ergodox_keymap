@@ -1,6 +1,6 @@
 # Automatically update the keymap visualization when compiling
 # The '-' in front of keymapviz is used to ignore errors spewed by keymapviz.
-KEYMAP_FOLDER = keyboards/ergodox_ez/keymaps/iris
+KEYMAP_FOLDER = keyboards/ergodox_ez/keymaps/qing
 .PHONY: %
 %:
 	-keymapviz -k ergodox_ez -l plain -r $(KEYMAP_FOLDER)/keymap.c -c $(KEYMAP_FOLDER)/visualisation/keymapviz.ini > /dev/null
