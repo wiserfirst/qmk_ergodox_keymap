@@ -1,5 +1,6 @@
-# Vim-like keymap for macOS
+# ErgoDox EZ Keymap on macOS
 
-This keymap adds vim emulation to the keyboard firmware. Layer 0 is 'normal mode', providing a number of commands like `w`, `e`, `a`, `dw`, etc.
-
-The keymap works by using macOS text-editing shortcuts, so currently it only chooches on macOS.
+* Home row mods and layer switches
+* Shift/Hyper/Meh mod-taps for thumb keys
+* Generates keymap visualization with keymapviz upon compilation
+* Supports MS Teams' Emojis
