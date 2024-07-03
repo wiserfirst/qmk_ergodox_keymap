@@ -4,6 +4,7 @@ KEYMAP_FOLDER = keyboards/ergodox_ez/keymaps/qing
 .PHONY: %
 %:
 	-keymapviz -k ergodox_ez -l plain -r $(KEYMAP_FOLDER)/keymap.c -c $(KEYMAP_FOLDER)/visualisation/keymapviz.ini > /dev/null
+	rm -f $(KEYMAP_FOLDER)/keymap.c.bac
 
 MOUSEKEY_ENABLE = yes
 LTO_ENABLE = yes
